@@ -42,7 +42,20 @@ class App extends Component {
   }
 
   displayLogins = () => {
-    return Object.keys(this.state.orgs).map(orgId => <LoginRow {...this.state.orgs[orgId]} />);
+    const { orgs } = this.state;
+
+    window.orgs = orgs;
+
+    const sortedOrgIds = Object.keys(orgs)
+      .sort((a, b) => {
+        if (orgs[a].alias.toLowerCase() < orgs[b].alias.toLowerCase()) { return -1; }
+        if (orgs[a].alias.toLowerCase() > orgs[b].alias.toLowerCase()) { return 1; }
+        return 0;
+      });
+
+    console.log({ sortedOrgIds })
+
+    return sortedOrgIds.map(orgId => (<LoginRow {...orgs[orgId]} />));
   }
 
   onChangeAlias = e => {
@@ -77,13 +90,29 @@ class App extends Component {
   }
 
   addLogin = () => {
-    console.log(this.state.alias)
     return (
-      <div>
+      <div className="form-row">
+        <div className="form-group">
+          <div className="col-md-6">
 
-        <input value={this.state.alias} name="alias" placeholder="enter org alias" onChange={this.onChangeAlias}></input>
-        <button onClick={() => this.createLogin(INSTANCE_TEST)}>Sandbox</button>
-        <button onClick={() => this.createLogin(INSTANCE_PROD)}>Dev or Production</button>
+            <input
+              ref={node => {
+                this.inputRef = node;
+              }}
+              type="text"
+              className='form-control'
+              value={this.state.alias}
+              onChange={this.onChangeAlias}
+              placeholder="Add a new login"
+            />
+          </div>
+          <div className="col-md-3">
+            <button className="btn btn-inline btn-primary" onClick={() => this.createLogin(INSTANCE_TEST)}>Sandbox</button>
+          </div>
+          <div className="col-md-3">
+            <button className="btn btn-inline btn-secondary" onClick={() => this.createLogin(INSTANCE_PROD)}>Dev or Production</button>
+          </div>
+        </div>
       </div>
     )
   }
@@ -93,16 +122,29 @@ class App extends Component {
     const { loading } = this.state;
 
     return (
-      <div className="App">
+      <div className='container-fluid'>
         {loading && (
-          <header className="App-header">
+          <header className="loading">
             <h1>loading...</h1>
           </header>
         )}
         {!loading && this.addLogin()}
-        <ul>
-          {this.displayLogins()}
-        </ul>
+        <div className='row'>
+          <div className='col-xs-12 col-md-12'>
+            <table className='table'>
+              <thead>
+                <tr>
+                  <th> Username Alias </th>
+                  <th> Username </th>
+                  <th> Instance URL </th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.displayLogins()}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     );
   }

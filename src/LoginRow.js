@@ -4,6 +4,8 @@ import sfdx from 'sfdx-node';
 const LoginRow =
   ({ accessToken, alias, clientId, connectedStatus, instanceUrl, lastUsed, loginUrl, orgId, username }) => {
 
+    console.log({ accessToken, alias, clientId, connectedStatus, instanceUrl, lastUsed, loginUrl, orgId, username })
+
     const openOrg = () => {
       console.log('opening', alias)
       window.sfdx = sfdx;
@@ -11,9 +13,11 @@ const LoginRow =
     }
 
     return (
-      <li>
-        <h3><button onClick={openOrg} >{alias}</button></h3>
-      </li >
+      <tr className='login-row'>
+        <th scope='row' onClick={openOrg} >{alias}</th>
+        <td>{username}</td>
+        <td>{instanceUrl}</td>
+      </tr>
     );
 
     // https://cs3.salesforce.com/secur/frontdoor.jsp?sid=00DQ000000EebNu!ARsAQDmT2lEpHmQ_EOWJxctkcDvb0zcvIXWvHNr6iRfOqHZRw7u3aqotpweCMEsqKFsMAObpDzntD6l7swnJ9594Gk8Zs1jQ
