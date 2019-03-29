@@ -84,6 +84,19 @@
     "cacheDir": "./cache",
     "macIcns": "./src/logo.icns"
   },
+  "window": {
+    "title": "Go Nimbly SFDC Login Manager",
+    "icon": "",
+    "toolbar": false,
+    "frame": true,
+    "width": 800,
+    "height": 500,
+    "position": "mouse",
+    "min_width": 600,
+    "min_height": 200,
+    "max_width": 800,
+    "max_height": 600
+  },
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",

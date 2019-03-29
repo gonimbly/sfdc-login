@@ -1,7 +1,18 @@
 .login-row:hover {
-background-color:#F3F3F3;
+  background-color: #f3f3f3;
 }
 
 .login-row > th {
   cursor: pointer;
+}
+
+.loading {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  background-color: rgba(243, 243, 243, 0.75);
+  z-index: 10;
 }

@@ -1,0 +1,11 @@
+.input-group-btn {
+  flex-direction: row;
+}
+
+.btn-inline {
+  margin: 0;
+}
+
+.add-login > .input-group {
+  width: 100%;
+}
