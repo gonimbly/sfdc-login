@@ -59,7 +59,8 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "dist": "build --tasks mac-x64 --mirror https://dl.nwjs.io/ ."
   },
   "eslintConfig": {
     "extends": "nw-react-app"
@@ -143,5 +144,7 @@
       "react-app"
     ]
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "nwjs-builder-phoenix": "^1.15.0"
+  }
 }
