@@ -1,5 +1,7 @@
 This project was bootstrapped with [Create NW.js React App](https://github.com/naviapps/create-nw-react-app).
 
+https://dribbble.com/shots/2878911-Task-Manager-Concept-Sign-Up
+
 ## Available Scripts
 
 In the project directory, you can run:
