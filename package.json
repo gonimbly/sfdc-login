@@ -72,6 +72,9 @@
     "not op_mini all"
   ],
   "main": "index.html",
+  "build": {
+    "nwVersion": "0.37.1"
+  },
   "nwBuilder": {
     "//": "https://github.com/nwjs-community/nw-builder",
     "platforms": [
