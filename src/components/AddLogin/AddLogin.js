@@ -1,4 +1,5 @@
 import React from "react";
+import classnames from "classnames";
 import "./style.css";
 
 const AddLogin = ({ forTestUrl, forLoginUrl, onChangeAlias, alias }) => {
@@ -11,7 +12,6 @@ const AddLogin = ({ forTestUrl, forLoginUrl, onChangeAlias, alias }) => {
           Enter a nickname and click the button corresponding to the edition
           (you can enter a namespace from the login page)
         </small>
-        <br />
         <br />
       </div>
 
@@ -27,15 +27,21 @@ const AddLogin = ({ forTestUrl, forLoginUrl, onChangeAlias, alias }) => {
           <span className="input-group-btn">
             <button
               type="button"
-              className="btn btn-inline btn-primary"
+              className={classnames("btn btn-inline btn-primary", {
+                disabled: !alias
+              })}
               onClick={forTestUrl}
+              disabled={!alias ? "disabled" : false}
             >
               Sandbox
             </button>
             <button
               type="button"
-              className="btn btn-inline btn-secondary"
+              className={classnames("btn btn-inline btn-secondary", {
+                disabled: !alias
+              })}
               onClick={forLoginUrl}
+              disabled={!alias ? "disabled" : false}
             >
               Production
             </button>
