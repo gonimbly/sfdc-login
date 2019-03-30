@@ -1,0 +1,12 @@
+.login-row > th.not-connected {
+  cursor: default;
+}
+
+.delete-login {
+  opacity: 0;
+  cursor: pointer;
+}
+
+.login-row:hover .delete-login {
+  opacity: 1;
+}
