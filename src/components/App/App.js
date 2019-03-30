@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import LoginRow from "./LoginRow";
+import LoginRow from "components/LoginRow";
 import Spinner from "components/Spinner";
 import AddLogin from "components/AddLogin";
 import "./App.css";
