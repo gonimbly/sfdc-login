@@ -11,7 +11,7 @@ const AddLogin = ({ forTestUrl, forLoginUrl, onChangeAlias, alias }) => {
           Enter a nickname and click the button corresponding to the edition
           (you can enter a namespace from the login page)
         </small>
-
+        <br />
         <br />
       </div>
 

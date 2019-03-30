@@ -62,6 +62,9 @@
     "test": "node scripts/test.js",
     "dist": "build --tasks mac-x64 --mirror https://dl.nwjs.io/ ."
   },
+  "externals": [
+    "sfdx-node"
+  ],
   "eslintConfig": {
     "extends": "nw-react-app"
   },
