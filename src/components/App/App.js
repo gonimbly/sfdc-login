@@ -13,7 +13,8 @@ class App extends Component {
     super();
     this.state = {
       orgs: {},
-      loading: true
+      loading: true,
+      loadingMsg: "Loading connected usernames..."
     };
   }
 
@@ -45,7 +46,7 @@ class App extends Component {
 
     console.log({ orgsById });
 
-    this.setState({ orgs: orgsById, loading: false });
+    this.setState({ orgs: orgsById, loading: false, loadingMsg: "" });
   };
 
   displayLogins = () => {
@@ -65,7 +66,28 @@ class App extends Component {
         return 0;
       });
 
-    return sortedOrgIds.map(orgId => <LoginRow {...orgs[orgId]} />);
+    return sortedOrgIds.map(orgId => (
+      <LoginRow
+        key={orgId}
+        {...orgs[orgId]}
+        logout={() => this.logout(orgs[orgId].alias)}
+      />
+    ));
+  };
+
+  logout = targetusername => {
+    console.log("logging out of ", targetusername);
+    this.setState({
+      loading: true,
+      loadingMsg: `Logging out of ${targetusername}...`
+    });
+    sfdx.auth
+      .logout({ targetusername, rejectOnError: true, noprompt: true })
+      .then(this.getOrgList)
+      .catch(err => {
+        console.log("Error logging out", err);
+        this.setState({ loading: false, loadingMsg: "" });
+      });
   };
 
   onChangeAlias = e => {
@@ -75,10 +97,13 @@ class App extends Component {
   };
 
   createLogin = instance => {
-    this.setState({ loading: true });
     const { alias } = this.state;
+    this.setState({
+      loading: true,
+      loadingMsg: `Creating ${alias}. Please login in your browser and allow SFDX to access your org.`
+    });
     if (!alias) {
-      // TOOD: Need to give user feedback they must enter an alias
+      // TODO: Need to give user feedback they must enter an alias
       return;
     }
 
@@ -111,17 +136,11 @@ class App extends Component {
   };
 
   render() {
-    const { loading } = this.state;
+    const { loading, loadingMsg } = this.state;
 
     return (
       <Fragment>
-        {loading && (
-          <div className="loading">
-            <div className="dropdown-loading">
-              <Spinner />
-            </div>
-          </div>
-        )}
+        <Spinner message={loadingMsg} loading={loading} />
         <div className="container-fluid">
           {this.addLogin()}
           <div className="row">
@@ -131,6 +150,7 @@ class App extends Component {
                   <tr>
                     <th> Username Alias </th>
                     <th> Username </th>
+                    <th />
                   </tr>
                 </thead>
                 <tbody>{this.displayLogins()}</tbody>
