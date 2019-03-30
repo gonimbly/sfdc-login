@@ -93,7 +93,7 @@
   },
   "window": {
     "title": "Go Nimbly SFDC Login Manager",
-    "icon": "./src/logo.icns",
+    "icon": "img/icon.png",
     "toolbar": false,
     "frame": true,
     "width": 800,

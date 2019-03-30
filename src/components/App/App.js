@@ -2,7 +2,18 @@ import React, { Component, Fragment } from "react";
 import LoginRow from "components/LoginRow";
 import Spinner from "components/Spinner";
 import AddLogin from "components/AddLogin";
+
+import img from "../../img/key-logo.png";
+
 const sfdx = require("sfdx-node");
+
+let tray = new nw.Tray({
+  tooltip: "SFDC Login Manager",
+  title: "🔑",
+  icon: "../../img/key-logo.png",
+  altIcon: "../../img/key-logo.png",
+  iconsAreTemplates: false
+});
 
 const INSTANCE_TEST = "test";
 const INSTANCE_PROD = "login";
@@ -43,9 +54,35 @@ class App extends Component {
       {}
     );
 
-    console.log({ orgsById });
-
     this.setState({ orgs: orgsById, loading: false, loadingMsg: "" });
+    this.setOrgMenu(orgs);
+  };
+
+  setOrgMenu = orgs => {
+    tray.remove();
+    tray = null;
+    tray = new nw.Tray({
+      tooltip: "SFDC Login Manager",
+      title: "🔑",
+      icon: "../../img/key-logo.png",
+      altIcon: "../../img/key-logo.png",
+      iconsAreTemplates: false
+    });
+    window.img = img;
+    const menu = new nw.Menu();
+    orgs.forEach(org => {
+      if (!org.alias || org.connectedStatus !== "Connected") return;
+      menu.append(
+        new nw.MenuItem({
+          type: "normal",
+          label: org.alias,
+          click: () => {
+            this.openOrg(org.alias);
+          }
+        })
+      );
+    });
+    tray.menu = menu;
   };
 
   displayLogins = () => {
@@ -69,9 +106,16 @@ class App extends Component {
       <LoginRow
         key={orgId}
         {...orgs[orgId]}
+        openOrg={() => this.openOrg(orgs[orgId].alias)}
         logout={() => this.logout(orgs[orgId].alias)}
       />
     ));
+  };
+
+  openOrg = alias => {
+    sfdx.org
+      .open({ targetusername: alias })
+      .then(x => console.log("opened alias", x));
   };
 
   logout = targetusername => {
