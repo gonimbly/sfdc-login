@@ -2,7 +2,6 @@ import React, { Component, Fragment } from "react";
 import LoginRow from "components/LoginRow";
 import Spinner from "components/Spinner";
 import AddLogin from "components/AddLogin";
-import "./App.css";
 const sfdx = require("sfdx-node");
 
 const INSTANCE_TEST = "test";

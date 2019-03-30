@@ -60,8 +60,7 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js",
-    "dist": "build --tasks mac-x64 --mirror https://dl.nwjs.io/ ."
+    "test": "node scripts/test.js"
   },
   "externals": [
     "sfdx-node"
@@ -94,7 +93,7 @@
   },
   "window": {
     "title": "Go Nimbly SFDC Login Manager",
-    "icon": "",
+    "icon": "./src/logo.icns",
     "toolbar": false,
     "frame": true,
     "width": 800,
@@ -151,7 +150,5 @@
       "react-app"
     ]
   },
-  "devDependencies": {
-    "nwjs-builder-phoenix": "^1.15.0"
-  }
+  "devDependencies": {}
 }
