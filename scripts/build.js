@@ -39,13 +39,98 @@ const isInteractive = process.stdout.isTTY;
 // Set externals to avoid native modules and other
 // node module import weirdness
 config.externals = {};
+
+const subDependencies = {};
+const calledWith = [];
+const nmCalledWith = [];
+const nmPathExists = [];
+const copiedFiles = {};
+
+// function handleNodeModules(topModule) {
+//   nmCalledWith.push(topModule);
+//   config.externals[topModule] = "commonjs " + topModule;
+
+//   const nmPath = path.join("node_modules", topModule);
+//   if (fs.pathExistsSync(nmPath)) {
+//     nmPathExists.push(nmPath);
+//     fs.readdirSync(nmPath)
+//       .filter(module => !module.includes(".bin"))
+//       .map(module => {
+//         config.externals[module] = "commonjs " + module;
+//         return module;
+//       })
+//       .forEach(handleSubDependencies);
+//   }
+// }
+
+// function handleSubDependencies(module) {
+//   handleNodeModules(path.join(module, "node_modules"));
+//   handleNodeModules(module);
+//   calledWith.push(module);
+//   const modulePkg = fs.readJSONSync(
+//     path.join("node_modules", module, "package.json"),
+//     {
+//       throws: false
+//     }
+//   );
+//   const dep = {};
+
+//   dep.modulePkg = modulePkg;
+
+//   try {
+//     if (modulePkg) {
+//       subDependencies[module] = modulePkg.dependencies;
+//       Object.keys(modulePkg.dependencies || {}).forEach(depModule => {
+//         config.externals[depModule] = "commonjs " + depModule;
+//         handleSubDependencies(depModule);
+//       });
+//     } else {
+//       const subModulePath = path.join("node_modules", module);
+//       dep.subModulePath = subModulePath;
+//       if (fs.pathExistsSync(subModulePath)) {
+//         fs.readdirSync(subModulePath).forEach(subModule => {
+//           handleSubDependencies(path.join(module, subModule));
+//         });
+//       }
+//     }
+//   } catch (err) {
+//     copiedFiles.ERROR = JSON.stringify({ err }, false, 2);
+//   }
+//   if (module === "ip-regex")
+//     fs.writeFileSync("ip-regex.json", JSON.stringify(dep, false, 2));
+// }
+
 const externals = appPackageJson.externals || [];
 
-fs.readdirSync("node_modules")
-  .filter(module => externals.includes(module))
-  .forEach(module => {
-    config.externals[module] = "commonjs " + module;
-  });
+// externals.forEach(module => handleSubDependencies(module));
+
+// const distModulesPath = path.join("public", "node_modules");
+// fs.ensureDirSync(distModulesPath);
+// Object.keys(config.externals).forEach(module => {
+//   const modulePath = path.join("node_modules", module);
+//   if (fs.pathExistsSync(modulePath)) {
+//     copiedFiles[module] = path.join(modulePath, module);
+//     fs.copySync(modulePath, path.join(distModulesPath, module), {
+//       dereference: true
+//     });
+//   }
+// });
+
+fs.writeFile(
+  `debug.${Date.now()}.json`,
+  JSON.stringify(
+    {
+      externals: config.externals,
+      copiedFiles,
+      subDependencies,
+      calledWith,
+      nmCalledWith,
+      nmPathExists
+    },
+    false,
+    2
+  )
+);
 
 // Warn and crash if required files are missing
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {

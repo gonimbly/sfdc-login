@@ -57,6 +57,7 @@
     "webpack-manifest-plugin": "2.0.4",
     "workbox-webpack-plugin": "3.6.3"
   },
+  "node-main": "scripts/main.js",
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
@@ -64,7 +65,11 @@
     "panic": "rm -rf node_modules && rm -rf build && rm -rf dist"
   },
   "externals": [
-    "sfdx-node"
+    "sfdx-node",
+    "sfdx-faye",
+    "@salesforce",
+    "ip-regex",
+    "lodash.includes"
   ],
   "eslintConfig": {
     "extends": "nw-react-app"
@@ -82,12 +87,10 @@
   "nwBuilder": {
     "//": "https://github.com/nwjs-community/nw-builder",
     "platforms": [
-      "osx64",
-      "win32",
-      "win64"
+      "osx64"
     ],
     "version": "latest",
-    "flavor": "normal",
+    "flavor": "sdk",
     "buildDir": "./build",
     "cacheDir": "./cache",
     "macIcns": "./src/logo.icns"
@@ -143,7 +146,8 @@
       "json",
       "web.jsx",
       "jsx",
-      "node"
+      "node",
+      "rb"
     ]
   },
   "babel": {
