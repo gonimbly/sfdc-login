@@ -1,17 +1,8 @@
 import React from "react";
-import sfdx from "sfdx-node";
 import classnames from "classnames";
 import "./styles.css";
 
-const LoginRow = ({ alias, connectedStatus, username, logout }) => {
-  const openOrg = () => {
-    console.log("opening", alias);
-    window.sfdx = sfdx;
-    sfdx.org
-      .open({ targetusername: alias })
-      .then(x => console.log("opened alias", x));
-  };
-
+const LoginRow = ({ alias, connectedStatus, username, logout, openOrg }) => {
   const connected = connectedStatus === "Connected";
 
   return (
