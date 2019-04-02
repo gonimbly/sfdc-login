@@ -18,6 +18,8 @@ let tray = new nw.Tray({
 const INSTANCE_TEST = "test";
 const INSTANCE_PROD = "login";
 
+// TODO: If SFDX doesn't work, display some kind of error message and kill the spinner.
+
 class App extends Component {
   constructor() {
     super();

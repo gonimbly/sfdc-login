@@ -65,11 +65,7 @@
     "panic": "rm -rf node_modules && rm -rf build && rm -rf dist"
   },
   "externals": [
-    "sfdx-node",
-    "sfdx-faye",
-    "@salesforce",
-    "ip-regex",
-    "lodash.includes"
+    "sfdx-node"
   ],
   "eslintConfig": {
     "extends": "nw-react-app"
